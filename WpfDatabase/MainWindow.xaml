@@ -1,0 +1,68 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfDatabase"
+        xmlns:Model="clr-namespace:WpfDatabase.Model" x:Class="WpfDatabase.MainWindow"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded" Closing="Window_Closing">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="DataTemplates.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <CollectionViewSource x:Key="studentViewSource" d:DesignSource="{d:DesignInstance {x:Type Model:Student}, CreateList=True}"/>
+            <CollectionViewSource x:Key="groupViewSource" d:DesignSource="{d:DesignInstance {x:Type Model:Group}, CreateList=True}"/>
+            <CollectionViewSource x:Key="eFContextViewSource" d:DesignSource="{d:DesignInstance {x:Type Model:EFContext}, CreateList=True}"/>
+
+        </ResourceDictionary>
+
+    </Window.Resources>
+    <DockPanel>
+        <Menu VerticalAlignment="Top" DockPanel.Dock="Top">
+            <MenuItem Header="Экспорт" Click="MenuItem_Click"/>
+        </Menu>
+        <TabControl Width="792">
+            <TabItem Header="Students" DataContext="{StaticResource studentViewSource}">
+                <DockPanel>
+                    <DockPanel Width="160" LastChildFill="True">
+                        <ComboBox x:Name="groupSelectList" DockPanel.Dock="Top" ItemsSource="{Binding Source={StaticResource groupViewSource}}" IsReadOnly="True" SelectionChanged="ComboBox_SelectionChanged" />
+                        <ListBox x:Name="listBox" ItemsSource="{Binding}" IsSynchronizedWithCurrentItem="True" Margin="0" DockPanel.Dock="Top" SelectionChanged="ListBox_SelectionChanged">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}"/>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                        <Button Content="Add" Margin="0" DockPanel.Dock="Bottom" Click="Button_Click" VerticalAlignment="Bottom"/>
+                        <Button x:Name="removeButton" Content="Remove" DockPanel.Dock="Bottom" Click="RemoveButton_Click" VerticalAlignment="Bottom"/>
+                    </DockPanel>
+                    <ContentControl Content="{Binding Source={StaticResource studentViewSource}}" 
+                        ContentTemplate="{DynamicResource studentDataTemplate}"
+                                    LostFocus="StudentFocusLost"/>
+                </DockPanel>
+            </TabItem>
+            <TabItem Header="Groups" DataContext="{StaticResource groupViewSource}">
+                <DockPanel LastChildFill="True" >
+                    <DockPanel Width="160">
+                        <ListBox x:Name="groupsListBox" ItemsSource="{Binding}" IsSynchronizedWithCurrentItem="True" Margin="0" Height="305" DockPanel.Dock="Top">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}"/>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                        <Button Content="Add" Margin="0" DockPanel.Dock="Bottom" Height="20" VerticalAlignment="Bottom" Click="GroupAddButtonClick"/>
+                        <Button x:Name="removeGroupButton" Content="Remove" VerticalAlignment="Bottom" DockPanel.Dock="Bottom" Click="RemoveGroupButton_Click" Height="20"/>
+                    </DockPanel>
+                    <ContentControl 
+                        Content="{Binding}" 
+                        ContentTemplate="{DynamicResource groupDataTemplate}"
+                        LostFocus="GroupFocusLost"/>
+                </DockPanel>
+            </TabItem>
+        </TabControl>
+    </DockPanel>
+</Window>

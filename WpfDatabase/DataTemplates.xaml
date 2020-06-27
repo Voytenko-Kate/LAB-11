@@ -1,0 +1,46 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:WpfDatabase"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    mc:Ignorable="d"
+                    xmlns:localModel="clr-namespace:WpfDatabase.Model">
+    <DataTemplate DataType="{x:Type localModel:Student}" x:Key="studentDataTemplate">
+        <Grid >
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            <Label Content="Name" HorizontalAlignment="Stretch" Margin="0" VerticalAlignment="Center"/>
+            <TextBox Grid.Column="1" HorizontalAlignment="Stretch" Height="23" Margin="0" TextWrapping="Wrap" Text="{Binding Name}" VerticalAlignment="Center" Width="Auto"/>
+            <Label Content="Admission" HorizontalAlignment="Stretch" Margin="0" Grid.Row="1" VerticalAlignment="Center"/>
+            <DatePicker Height="Auto" Width="Auto" Grid.Column="1" Grid.Row="1" Text="{Binding Admission, Mode=TwoWay}" VerticalAlignment="Center"/>
+            <Label Grid.Row="2" Content="Group" Height="Auto" Width="Auto" VerticalAlignment="Center"/>
+            <ComboBox Grid.Row="2" Grid.Column="1" Height="Auto" Width="Auto" VerticalAlignment="Center" SelectedItem="{Binding Group}" ItemsSource="{Binding Mode=OneWay, Path=Group.AllGroups}"/>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type localModel:Group}" x:Key="groupDataTemplate">
+        <Grid >
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            <Label Content="Course" HorizontalAlignment="Stretch" Margin="0" VerticalAlignment="Center"/>
+            <TextBox Grid.Column="1" HorizontalAlignment="Stretch" Height="23" Margin="0" TextWrapping="Wrap" Text="{Binding Course}" VerticalAlignment="Center" Width="Auto"/>
+            <Label Content="Number" HorizontalAlignment="Stretch" Margin="0" Grid.Row="1" VerticalAlignment="Center"/>
+            <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" Height="23" Margin="0" TextWrapping="Wrap" Text="{Binding Number}" VerticalAlignment="Center" Width="Auto"/>
+            <Label Grid.Row="2" Content="Track" Height="Auto" Width="Auto" VerticalAlignment="Center"/>
+            <TextBox Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" Height="23" Margin="0" TextWrapping="Wrap" Text="{Binding Track}" VerticalAlignment="Center" Width="Auto"/>
+        </Grid>
+    </DataTemplate>
+</ResourceDictionary>
